@@ -273,14 +273,6 @@ const AlunoDashboard = () => {
       <main className={styles.mainContent}>
         {activeTab === "duvidas" && (
           <>
-            <div className={styles.statsGrid}>
-              {stats.map((stat) => (
-                <div key={stat.label} className={styles.card}>
-                  <p className={styles.statValue}>{stat.value}</p>
-                  <p className={styles.statLabel}>{stat.filterValue === "Todas" ? "Dúvidas Enviadas" : `Dúvidas ${stat.label}`}</p>
-                </div>
-              ))}
-            </div>
 
             <div className={styles.duvidasSection}>
               <div className={styles.sectionHeader}>

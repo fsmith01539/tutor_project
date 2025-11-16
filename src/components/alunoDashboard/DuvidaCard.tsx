@@ -1,5 +1,9 @@
+"use client";
+
 import './duvidaCard.css';
-import { HiUserCircle } from "react-icons/hi"; 
+import { HiUserCircle } from "react-icons/hi";
+import { useState, useEffect } from 'react';
+import ReactDOM from "react-dom";
 
 interface Duvida {
     id: number;
@@ -27,12 +31,62 @@ const getStatusClass = (status: string) => {
 };
 
 const DuvidaCard = ({ duvida }: DuvidaCardProps) => {
+
+    const [modalAberto, setModalAberto] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true); // O componente montou no cliente
+    }, []);
+
+    const abrirModal = () => setModalAberto(true);
+    const fecharModal = () => setModalAberto(false);
+
+    const handleFecharClick = (e: React.MouseEvent) => {
+        e.stopPropagation(); 
+        fecharModal(); 
+    };
+    const AbrirDetalhes = () => {
+
+        if (!isMounted) {
+            return null;
+        }
+
+        return ReactDOM.createPortal(
+            <div className="modal">
+                <div className="modal-content">
+                    <button aria-label="Fechar modal" className="close-btn" onClick={handleFecharClick}> &times; </button>
+                    <h2 className="titulo">{duvida.titulo}</h2>
+                    <div className='conteudo-duvida'>
+                        <div className='descricao'>
+                            <p>{duvida.conteudo}</p>
+                        </div>
+                        <div className='duvida-stats-modal'>
+                            <div className="tag-expandida tag-materia-expandida">{duvida.materia}</div>
+                            <div className={`tag-expandida status-tag ${getStatusClass(duvida.status)}`}>{duvida.status}</div>
+                            <div className="tag-expandida tag-materia-expandida">{duvida.tempo}</div>
+                            <div className="tag-expandida tag-materia-expandida">{duvida.respondidoPor}</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>,
+            document.body
+        );
+    }
+
+
     if (!duvida) {
         return null;
     }
 
+    const handleVerConversaClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        //Lógica da conversa (mock)
+    };
+
     return (
-        <div className="duvida-card">
+        <div className="duvida-card" onClick={abrirModal}>
             <div className="duvida-card-header">
                 <h3 className="duvida-card-titulo">{duvida.titulo}</h3>
                 <div className="duvida-card-tags">
@@ -42,26 +96,12 @@ const DuvidaCard = ({ duvida }: DuvidaCardProps) => {
                     <span className="tag tag-materia">{duvida.materia}</span>
                 </div>
             </div>
-            
-            <p className="duvida-card-conteudo">{duvida.conteudo}</p>
-            
-            <div className="duvida-card-footer">
-                <div className="footer-info-monitor">
-                    {duvida.respondidoPor ? (
-                        <>
-                            <HiUserCircle className="icon-monitor" />
-                            <span>Respondido por: <strong className="monitor-nome">{duvida.respondidoPor}</strong></span>
-                        </>
-                    ) : (
-                        <span className="status-aguardando-texto">Aguardando uma resposta...</span>
-                    )}
-                </div>
-                
-                <div className="footer-acoes">
-                    <span className="duvida-tempo">{duvida.tempo}</span>
-                    <button className="btn-ver-conversa">Ver Conversa</button>
-                </div>
+
+            <div className="footer-acoes">
+                <span className="duvida-tempo">{duvida.tempo}</span>
+                <button className="btn-ver-conversa" onClick={handleVerConversaClick}>Ver Conversa</button>
             </div>
+            {modalAberto && <AbrirDetalhes />}
         </div>
     );
 };

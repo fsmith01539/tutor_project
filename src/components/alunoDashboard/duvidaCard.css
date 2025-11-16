@@ -1,26 +1,10 @@
-/* --- Cores do Tailwind (referência) ---
-:root {
-    --gray-100: #f3f4f6;
-    --gray-400: #9ca3af;
-    --gray-500: #6b7280;
-    --gray-600: #4b5563;
-    --gray-800: #1f2937;
-    --green-100: #d1fae5;
-    --green-800: #065f46;
-    --yellow-100: #fef3c7;
-    --yellow-800: #92400e;
-    --yellow-600: #d97706;
-    --blue-600: #2563eb;
-    --blue-800: #1e40af;
-}
-*/
-
 /* Card Principal (bg-white p-6 rounded-lg shadow-sm) */
 .duvida-card {
     background-color: #fff;
     padding: 1.5rem; /* p-6 */
     border-radius: 0.5rem; /* rounded-lg */
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); /* shadow-sm */
+    cursor: pointer;
 }
 
 /* Header (flex justify-between items-start mb-2) */
@@ -33,7 +17,7 @@
 
 /* Título (text-lg font-semibold text-gray-800) */
 .duvida-card-titulo {
-    font-size: 1.125rem; /* text-lg */
+    font-size: 1.25rem; /* text-lg */
     font-weight: 600; /* font-semibold */
     color: #1f2937; /* text-gray-800 */
 }
@@ -90,48 +74,11 @@
     margin-bottom: 1rem; /* mb-4 */
 }
 
-/* Footer (flex items-center justify-between text-sm text-gray-500 border-t pt-4 mt-4) */
-.duvida-card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 0.875rem; /* text-sm */
-    color: #6b7280; /* text-gray-500 */
-    border-top: 1px solid #e5e7eb; /* border-t (com cor default do tailwind) */
-    padding-top: 1rem; /* pt-4 */
-    margin-top: 1rem; /* mt-4 */
-}
-
-/* Info do Monitor (flex items-center space-x-2) */
-.footer-info-monitor {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem; /* space-x-2 */
-}
-
-/* Ícone (h-5 w-5 text-gray-400) */
-.icon-monitor {
-    height: 1.25rem; /* h-5 */
-    width: 1.25rem; /* w-5 */
-    color: #9ca3af; /* text-gray-400 */
-}
-
-/* Nome do monitor (para dar ênfase) */
-.monitor-nome {
-    font-weight: 600;
-    color: #374151; /* um pouco mais escuro que o texto do footer */
-}
-
-/* Texto "Aguardando..." (text-yellow-600) */
-.status-aguardando-texto {
-    color: #d97706;
-}
-
 /* Ações do Footer (flex items-center space-x-4) */
 .footer-acoes {
     display: flex;
-    align-items: center;
-    gap: 1rem; /* space-x-4 */
+    justify-content: right;
+    gap: 1rem;
 }
 
 /* Tempo da Dúvida (text-gray-500) */
@@ -142,9 +89,7 @@
 /* Botão "Ver Conversa" (text-blue-600 hover:text-blue-800 font-medium) */
 .btn-ver-conversa {
     color: #2563eb; /* text-blue-600 */
-    font-weight: 500; /* font-medium */
-    
-    /* Resets de botão para parecer um link */
+    font-weight: 500; 
     background-color: transparent;
     border: none;
     padding: 0;
@@ -154,4 +99,84 @@
 
 .btn-ver-conversa:hover {
     color: #1e40af; /* hover:text-blue-800 */
+}
+
+/* Modal */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    position: relative;
+    background: #fff;
+    color: #000;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    scrollbar-gutter: stable both-edges;
+}
+
+.close-btn {
+    position: absolute;
+    right: 15px; 
+    top: 15px; 
+    z-index: 10; 
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+
+.modal-content .titulo {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-top: 1rem; 
+}
+
+.conteudo-duvida{
+    display: flex;
+    margin: 0px auto;
+}
+
+.conteudo-duvida .descricao{
+    width: 50%;
+    padding: 15px;
+}
+
+.conteudo-duvida .duvida-stats-modal{
+    width: 50%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+
+.tag-expandida {
+    padding-left: 0.5rem; /* px-2 */
+    padding-right: 0.5rem;
+    padding-top: 0.25rem; /* py-1 */
+    padding-bottom: 0.25rem;
+    font-size: 0.75rem; /* text-xs */
+    border-radius: 9999px; /* rounded-full */
+    margin-left: auto;
+}
+
+/* Tag de Matéria (bg-gray-100 text-gray-800) */
+.tag-materia-expandida {
+    background-color: #f3f4f6;
+    color: #1f2937;
 }

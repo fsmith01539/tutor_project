@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import './novaDuvida.css';
 import FileUpload from "./FileUpload";
+import AlunoDashboard from "@/pages/alunoDashboard/AlunoDashboard";
 
 const NovaDuvida = () => {
 

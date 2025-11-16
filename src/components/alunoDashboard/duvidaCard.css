@@ -1,10 +1,16 @@
-/* Card Principal (bg-white p-6 rounded-lg shadow-sm) */
+/* Card Principal */
 .duvida-card {
     background-color: #fff;
-    padding: 1.5rem; /* p-6 */
-    border-radius: 0.5rem; /* rounded-lg */
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); /* shadow-sm */
+    padding: 1.5rem;
+    border-radius: 0.75rem; /* Um pouco mais arredondado */
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.duvida-card:hover {
+    transform: translateY(-4px); /* Efeito de levantar */
+    box-shadow: 0 4px 10px 0 rgb(0 0 0 / 0.07); /* Sombra mais suave */
 }
 
 /* Header (flex justify-between items-start mb-2) */
@@ -101,6 +107,16 @@
     color: #1e40af; /* hover:text-blue-800 */
 }
 
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
 /* Modal */
 
 .modal {
@@ -114,6 +130,7 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    animation: fadeIn 0.2s ease-out;
 }
 
 .modal-content {
@@ -127,52 +144,84 @@
     max-height: 90vh;
     overflow-y: auto;
     scrollbar-gutter: stable both-edges;
+    padding: 2.5rem;
+    animation: scaleUp 0.2s ease-out;
 }
 
 .close-btn {
     position: absolute;
-    right: 15px; 
-    top: 15px; 
-    z-index: 10; 
+    top: 1rem;   
+    right: 1rem; 
+    z-index: 10;
     cursor: pointer;
     font-size: 1.5rem;
-    line-height: 1;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; 
+    background-color: transparent;
+    border: none;
+    color: #9ca3af; 
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.close-btn:hover {
+    background-color: #f3f4f6; /* Fundo cinza claro no hover */
+    color: #1f2937; /* Cor mais escura */
 }
 
 
 .modal-content .titulo {
-    font-size: 2rem;
+    font-size: 1.75rem;
     font-weight: 600;
-    margin-bottom: 1rem;
-    padding-top: 1rem; 
+    margin-bottom: 1.5rem; 
+    padding-right: 3rem;
 }
 
-.conteudo-duvida{
-    display: flex;
-    margin: 0px auto;
+.conteudo-duvida {
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: 2rem; 
+    margin-top: 1rem;
 }
 
-.conteudo-duvida .descricao{
-    width: 50%;
-    padding: 15px;
+@media (min-width: 768px) { /* tablets e desktops */
+    .conteudo-duvida {
+        grid-template-columns: 3fr 1fr; /* Layout 75% / 25% */
+    }
 }
 
-.conteudo-duvida .duvida-stats-modal{
-    width: 50%;
-    padding: 15px;
+.conteudo-duvida .descricao {
+    width: 100%; 
+    padding: 0; 
+}
+
+.conteudo-duvida .descricao p {
+    font-size: 0.95rem;
+    line-height: 1.6; 
+    color: #374151; 
+}
+
+.conteudo-duvida .duvida-stats-modal {
+    width: 100%; 
+    padding: 1rem; 
     display: flex;
     flex-direction: column;
-    text-align: right;
+    gap: 0.75rem; 
+    background-color: #f9fafb; 
+    border-radius: 0.5rem;
+    align-self: flex-start;
 }
 
 .tag-expandida {
-    padding-left: 0.5rem; /* px-2 */
-    padding-right: 0.5rem;
-    padding-top: 0.25rem; /* py-1 */
-    padding-bottom: 0.25rem;
-    font-size: 0.75rem; /* text-xs */
-    border-radius: 9999px; /* rounded-full */
-    margin-left: auto;
+    padding: 0.25rem 0.75rem; /* Ajuste de padding */
+    font-size: 0.75rem;
+    border-radius: 9999px;
+    margin-bottom: 0;
+    text-align: center;
+    width: fit-content;
 }
 
 /* Tag de Matéria (bg-gray-100 text-gray-800) */

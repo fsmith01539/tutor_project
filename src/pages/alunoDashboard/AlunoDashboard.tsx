@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 import dynamic from "next/dynamic";
 
 import styles from "./aluno.module.css";
@@ -14,6 +14,7 @@ const ProfileForm = dynamic(
   () => import("../../components/perfil/ProfileForm"),
   { ssr: false }
 );
+
 
 interface Duvida {
   id: number;
@@ -219,10 +220,15 @@ const dados: Dados = {
   ],
 };
 
+const INITIAL_ITEMS = 3;
+const ITEMS_PER_LOAD = 5;
+
+
 const AlunoDashboard = () => {
   const [activeTab, setActiveTab] = useState<"duvidas" | "perfil">("duvidas");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [filtro, setFiltro] = useState("Todas"); 
+  const [visibleCount, setVisibleCount] = useState(INITIAL_ITEMS);
   
   const handleFiltroChange = (evento: React.ChangeEvent<HTMLInputElement>) => {
     const novoValor = evento.target.value;
@@ -260,6 +266,34 @@ const AlunoDashboard = () => {
     },
   ];
 
+  useEffect(() => {
+    setVisibleCount(INITIAL_ITEMS);
+  }, [filtro]);
+
+  const duvidasFiltradas = useMemo(() => {
+    return dados.duvidas.filter((duvida) => {
+      if (filtro === "Todas") {
+        return true;
+      }
+      if (filtro === "Resolvidas") {
+        return (
+          duvida.status === "Respondida" || duvida.status === "Fechada"
+        );
+      }
+      return duvida.status === filtro;
+    });
+  }, [dados.duvidas, filtro]);
+
+  const duvidasVisiveis = duvidasFiltradas.slice(0, visibleCount);
+
+  const handleLoadMore = () => {
+    setVisibleCount((prevCount) => prevCount + ITEMS_PER_LOAD);
+  };
+
+  const totalFiltrado = duvidasFiltradas.length;
+  const hasMoreItems = visibleCount < totalFiltrado;
+
+
   return (
     <div className={styles.dashboardContainer}>
       <CabecalhoAluno
@@ -286,22 +320,25 @@ const AlunoDashboard = () => {
                 stats={stats}
               />
 
-              {dados.duvidas
-                .filter((duvida) => {
-                  if (filtro === "Todas") {
-                    return true;
-                  }
-                  if (filtro === "Resolvidas") {
-                    return (
-                      duvida.status === "Respondida" ||
-                      duvida.status === "Fechada"
-                    );
-                  }
-                  return duvida.status === filtro;
-                })
-                .map((duvida) => (
-                  <DuvidaCard key={duvida.id} duvida={duvida} />
-                ))}
+              {duvidasVisiveis.map((duvida) => (
+                <DuvidaCard key={duvida.id} duvida={duvida} />
+              ))}
+              
+              {/* NOVO: Adicione o botão "Carregar mais" e o contador */}
+              {hasMoreItems && (
+                <button 
+                  onClick={handleLoadMore} 
+                  className={styles.loadMoreButton} // Crie este estilo!
+                >
+                  Carregar mais dúvidas
+                </button>
+              )}
+
+              <p className={styles.counterText}> {/* Crie este estilo! */}
+                Exibindo {duvidasVisiveis.length} de {totalFiltrado} dúvidas
+              </p>
+
+              
             </div>
           </>
         )}

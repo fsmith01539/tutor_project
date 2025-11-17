@@ -1,0 +1,186 @@
+/* components/TimePicker.css */
+
+.time-picker-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.time-picker-trigger {
+    padding: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: var(--gray-800);
+    width: 100%;
+    box-sizing: border-box; 
+    background-color: #fafafa;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.time-picker-trigger:hover {
+    border-color: #aaa;
+}
+
+.time-picker-wrapper:focus-within .time-picker-trigger,
+.time-picker-trigger:focus {
+    outline: none;
+    border-color: var(--blue-600);
+    background-color: var(--white);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.time-picker-icon {
+    color: var(--gray-600);
+    display: flex;
+    align-items: center;
+}
+
+.time-picker-popover {
+    position: absolute;
+    top: calc(100% + 8px); 
+    left: 0;
+    width: 100%;
+    max-width: 200px; 
+    margin-left: auto;
+    margin-right: auto;
+    right: 0;
+    background-color: var(--white);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0.5rem;
+    z-index: 1010; 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    animation: fadeIn 0.1s ease-out;
+}
+
+.time-picker-rollers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: monospace;
+    color: var(--gray-800);
+    padding: 0.5rem 0;
+}
+
+/* --- INÍCIO DA CORREÇÃO --- */
+.time-picker-column {
+    height: 150px; /* 3 itens visíveis (3 * 50px) */
+    width: 60px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    text-align: center;
+    font-size: 1.8rem;
+    position: relative;
+    user-select: none;
+    scroll-snap-type: y mandatory;
+    /* REMOVIDO: line-height: 50px; (movido para o filho) */
+}
+
+.time-picker-column::-webkit-scrollbar {
+    display: none;
+}
+
+.time-picker-option {
+    padding: 0;
+    cursor: pointer;
+    color: var(--gray-400); 
+    transition: color 0.1s ease-in-out, transform 0.1s ease-in-out;
+    scroll-snap-align: center;
+
+    /* ALTURA FIXA E CENTRALIZAÇÃO VERTICAL */
+    height: 50px;
+    line-height: 50px;
+    display: flex; /* Usar flex para centralizar */
+    align-items: center;
+    justify-content: center;
+    /* Isso garante que a altura seja sempre 50px */
+}
+
+.time-picker-option.selected {
+    color: var(--gray-800); 
+    font-weight: bold;
+    font-size: 2.2rem;
+    transform: scale(1.1);
+    /* A altura continua 50px por causa do 'height' e 'flex' */
+}
+/* --- FIM DA CORREÇÃO --- */
+
+.time-picker-separator {
+    font-size: 2.2rem;
+    font-weight: bold;
+    padding: 0 5px;
+    line-height: 50px;
+    color: var(--gray-800);
+}
+
+.time-picker-column::before,
+.time-picker-column::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 50px; 
+    pointer-events: none;
+    z-index: 1;
+}
+.time-picker-column::before {
+    top: 0;
+    background: linear-gradient(to bottom, var(--white) 0%, rgba(255,255,255,0) 100%);
+}
+.time-picker-column::after {
+    bottom: 0;
+    background: linear-gradient(to top, var(--white) 0%, rgba(255,255,255,0) 100%);
+}
+
+.time-picker-actions {
+    padding: 0.5rem;
+    border-top: 1px solid #eee;
+    margin-top: 0.5rem;
+}
+
+.time-picker-confirm-btn {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--white); 
+    background-color: var(--blue-600); 
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.time-picker-confirm-btn:hover {
+    background-color: var(--blue-700);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilos para os espaços vazios (dummies) */
+.time-picker-option.dummy {
+    color: transparent;
+    cursor: default;
+    user-select: none;
+}
+.time-picker-option.dummy.selected {
+    color: transparent;
+    font-weight: normal;
+    font-size: 1.8rem;
+    transform: scale(1);
+}

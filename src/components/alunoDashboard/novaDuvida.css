@@ -1,38 +1,23 @@
+/* Estilos do Botão Principal */
 .primaryButton {
-
     background-color: var(--blue-600);
-
     color: var(--white);
-
     padding: 0.5rem 1rem;
-    /* px-4 py-2 */
-
     border-radius: 0.5rem;
-    /* rounded-lg */
-
     font-weight: 500;
-    /* font-medium */
-
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    /* shadow-sm */
-
     transition: background-color 0.2s ease-in-out;
-    /* transition-colors */
-
     border: none;
-
     cursor: pointer;
-
-    font-size:1.5rem;
-
+    font-size: 1.5rem;
 }
 
 .primaryButton:hover {
     background-color: var(--blue-700);
-    /* hover:bg-blue-700 */
 }
 
-.modal {
+/* Estilos do Modal (Backdrop) */
+.modal-backdrop {
     position: fixed;
     top: 0;
     left: 0;
@@ -41,14 +26,15 @@
     background: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
-    align-items: center;
+    box-align: center;
     z-index: 1000;
 }
 
+/* Conteúdo do Modal */
 .modal-content {
     position: relative;
-    background: #fff;
-    color: #000;
+    background: var(--white); /* Variável global */
+    color: var(--gray-800);  /* Variável global */
     padding: 2rem;
     border-radius: 12px;
     width: 90%;
@@ -56,138 +42,161 @@
     max-height: 90vh;
     overflow-y: auto;
     scrollbar-gutter: stable both-edges;
+    animation: modalFadeIn 0.3s ease-out;
 }
 
-fieldset{
-    border: 1px solid black;
-    border-radius: 15px;
-    padding: 10px;
-    margin: 5px;
-}
-
-.close-btn {
+.modal-content .close-btn {
     position: absolute;
     top: 15px;
     right: 20px;
     font-size: 1.5rem;
     cursor: pointer;
-    color: #666;
+    color: var(--gray-600); /* Variável global */
 }
 
-.close-btn:hover {
-    color: #000;
+.modal-content .close-btn:hover {
+    color: var(--gray-800); /* Variável global */
 }
 
 .modal-content h2 {
     margin-bottom: 1.5rem;
-    color: #111;
+    color: var(--gray-800); /* Variável global */
     text-align: center;
     font-size: 1.5em;
-    font-weight:  bold;
+    font-weight: bold;
 }
 
-.photo-upload {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+/* Estilos do Formulário (COM ESPECIFICIDADE) */
+.modal-content fieldset {
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    padding: 1rem 1.5rem;
+    margin: 5px 0;
 }
 
-.photo-placeholder {
-    width: 80px;
-    height: 80px;
-    border: 2px dashed #ccc;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #777;
+.modal-content legend {
+    font-weight: 600;
+    padding: 0 0.5rem;
 }
 
-.photo-actions button {
-    background: #f2f2f2;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
+.modal-content details {
+    margin-top: 1rem;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 0.5rem;
+}
+
+.modal-content summary {
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
     font-weight: 500;
 }
 
-.photo-actions button:hover {
-    background: #ddd;
-}
 
-.photo-actions p {
-    font-size: 0.8rem;
-    color: #777;
-    margin-top: 4px;
-}
-
-.form-group {
+.modal-content .form-group {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
     margin-bottom: 0.8rem;
+    width: 100%;
+    background: none;
 }
 
-/* CORREÇÃO: Seletor aninhado movido para CSS padrão */
-.form-group select {
-    padding: 0.7rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    background-color: #fff;
-    color: #333;
-    appearance: none;
-    /* Remove seta padrão do dropdown */
-    cursor: pointer;
-}
 
-/* Modificador para campos que ocupam a largura total */
-.form-group.full-width {
-    grid-column: span 2;
-    margin-bottom: 1.2rem;
-}
-
-label {
+.modal-content label {
     font-weight: 600;
     font-size: 0.95rem;
 }
 
-input,
-textarea {
+
+/* Estilo base para todos os campos */
+.modal-content input[type="text"],
+.modal-content input[type="date"],
+.modal-content input[type="time"], /* ADICIONADO */
+.modal-content textarea,
+.modal-content .form-group select {
     padding: 0.7rem;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 0.95rem;
+    font-family: inherit;
+    color: var(--gray-800); /* Variável global */
+    width: 100%;
+    box-sizing: border-box; 
+    background-color: #fafafa;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-textarea {
+/* HOVER: Estado de hover */
+.modal-content input[type="text"]:hover,
+.modal-content input[type="date"]:hover,
+.modal-content input[type="time"]:hover, /* ADICIONADO */
+.modal-content textarea:hover,
+.modal-content .form-group select:hover {
+    border-color: #aaa;
+}
+
+/* FOCUS: Estado de foco */
+.modal-content input[type="text"]:focus,
+.modal-content input[type="date"]:focus,
+.modal-content input[type="time"]:focus, /* ADICIONADO */
+.modal-content textarea:focus,
+.modal-content .form-group select:focus {
+    outline: none;
+    border-color: var(--blue-600); /* Variável global */
+    background-color: var(--white); /* Variável global */
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2); 
+}
+
+/* Estilo específico para o SELECT */
+.modal-content .form-group select {
+    appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+    background-position: right 0.7rem center;
+    background-repeat: no-repeat;
+    background-size: 1.25em;
+    padding-right: 2.5rem;
+}
+
+.modal-content textarea {
     resize: vertical;
+    min-height: 80px;
 }
 
-.form-buttons {
+.modal-content ::placeholder {
+    color: #999;
+    opacity: 1; 
+}
+/* -------------------------------------------
+ * FIM DAS CORREÇÕES
+ * -------------------------------------------
+ */
+
+
+/* Botões do Formulário */
+.modal-content .form-buttons {
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
     margin-top: 1.5rem;
 }
 
-.cancel-btn {
+.modal-content .cancel-btn {
     background: #f2f2f2;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 0.8rem 1.6rem;
     font-weight: 500;
     cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.modal-content .cancel-btn:hover {
+    background: #e5e5e5;
 }
 
-.submit-btn {
-    background: #2563eb;
-    color: #fff;
+.modal-content .submit-btn {
+    background: var(--blue-600); /* Variável global */
+    color: var(--white); /* Variável global */
     border: none;
     border-radius: 8px;
     padding: 0.8rem 1.6rem;
@@ -196,16 +205,24 @@ textarea {
     transition: background-color 0.25s ease;
 }
 
-.submit-btn:hover {
-    background: #1d4ed8;
+.modal-content .submit-btn:hover {
+    background: var(--blue-700); /* Variável global */
 }
 
-@keyframes fadeIn {
+/* Responsividade para o grid */
+@media (max-width: 768px) {
+    .modal-content .form-grid {
+        grid-template-columns: 1fr; /* Coluna única em telas pequenas */
+        gap: 0.8rem;
+    }
+}
+
+/* Animação de Entrada do Modal */
+@keyframes modalFadeIn {
     from {
         opacity: 0;
-        transform: translateY(-10px);
+        transform: translateY(-20px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);

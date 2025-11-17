@@ -126,3 +126,32 @@
   margin-bottom: 1.5rem;
   /* mb-6 */
 }
+
+/* ... (seus estilos existentes) ... */
+
+.loadMoreButton {
+  display: block;
+  width: 100%;
+  max-width: 300px; /* ou o tamanho que preferir */
+  margin: 20px auto 10px; /* Centraliza e adiciona espaço */
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #007bff; /* Cor de exemplo (azul) */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.loadMoreButton:hover {
+  background-color: #0056b3; /* Cor mais escura ao passar o mouse */
+}
+
+.counterText {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-top: 10px;
+}
